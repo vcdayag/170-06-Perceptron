@@ -15,7 +15,6 @@ class Perceptron:
             self.learning_rate = float(inputList.pop(0))
             self.threshold = float(inputList.pop(0))
             self.bias = float(inputList.pop(0))
-            print(self.bias)
 
             try:     
                 for row in inputList:
@@ -57,10 +56,8 @@ class Perceptron:
         print(self.matrix)
 
     def compute(self):
-        print(self.matrix)
         for indexRow in range(len(self.matrix)):
             row = self.matrix[indexRow]
-            print(self.computePerceptronValue(row))
             row[self.indexA] = self.computePerceptronValue(row)
             row[self.indexY] = self.determineY(row[self.indexA])
             if(indexRow != len(self.matrix)-1):

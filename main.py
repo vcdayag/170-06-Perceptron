@@ -24,15 +24,20 @@ class Perceptron:
             except IndexError as e:
                 print("Error: Invalid self.matrix")
 
-    def computePerceptronValue(row:list):
-        
-        pass
+    def computePerceptronValue(self,row:list) -> float:
+        a = 0
+        for i in range(self.inputRowLength):
+            a += row[i]*row[self.inputRowLength+i]
+        return a
 
-    def determineY():
-        pass
+    def determineY(self, a:float) -> int:
+        return 1 if a>=self.threshold else 0
 
-    def adjustWeight():
-        pass
+    def adjustWeight(self, row:list) -> list:
+        output = []
+        for i in range(self.inputRowLength):
+            output.append(row[self.inputRowLength+i]+(self.learning_rate*i))
+        return output
 
     def debugprint(self):
         print(self.learning_rate)
@@ -44,9 +49,18 @@ class Perceptron:
         indexA = self.inputRowLength*2
         indexY = indexA+1
         indexZ = indexY+1
-        for row in self.matrix:
+        print(self.matrix)
+        for indexRow in range(len(self.matrix)):
+            row = self.matrix[indexRow]
+            print(self.computePerceptronValue(row))
             row[indexA] = self.computePerceptronValue(row)
+            row[indexY] = self.determineY(row[indexA])
+            if(indexRow != len(self.matrix)-1):
+                self.matrix[indexRow+1][3:5] = self.adjustWeight(row)
+
+        print(self.matrix)
 
 
 p = Perceptron()
 p.readInput()
+p.compute()

@@ -39,6 +39,7 @@ class Perceptron:
                 print("Error: Invalid input matrix")
                 sys.exit()
 
+            # get the index of the values a, y, z in the table
             self.indexA = self.inputRowLength * 2
             self.indexY = self.indexA + 1
             self.indexZ = self.indexY + 1
@@ -50,9 +51,10 @@ class Perceptron:
         return a
 
     def determineY(self, a: float) -> float:
-        return 1.0 if a >= self.threshold else 0.0
+        return 1 if a >= self.threshold else 0
 
     def adjustWeight(self, row: list) -> list:
+        # computes for the weights of the next row
         output = []
         for i in range(self.inputRowLength):
             output.append(
@@ -68,6 +70,7 @@ class Perceptron:
         self.printMatrix()
 
     def stringMatrix(self) -> str:
+        # generate a string of a formatted matrix
         matrix = ""
         subscript = [str(x) for x in range(self.inputXLength)]
         subscript.append("b")
@@ -90,11 +93,13 @@ class Perceptron:
         print(self.stringMatrix())
 
     def compute(self):
+        # compute the perceptron
         stopFlag = False
         interations = 0
         outputMatrix = ""
         # self.printMatrix()
 
+        # loop until the weights converge
         while not stopFlag:
             lastrow = []
             for indexRow in range(len(self.matrix)):
@@ -114,6 +119,7 @@ class Perceptron:
                 # print("edit row")
                 # print(row)
 
+            # checks for the weights if it converged
             for indexRow in range(1, len(self.matrix)):
                 # print(
                 #     self.matrix[indexRow][self.inputRowLength : self.inputRowLength * 2]
@@ -127,7 +133,8 @@ class Perceptron:
                     stopFlag = False
                     break
                 stopFlag = True
-
+            
+            # if the weights does not converge update the first row weights with the lastrow
             if not stopFlag:
                 self.matrix[0][self.inputRowLength : self.inputRowLength * 2] = lastrow
 

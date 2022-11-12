@@ -1,3 +1,6 @@
+import itertools
+
+
 class Perceptron:
     def __init__(self):
         self.learning_rate = 0.1
@@ -50,30 +53,6 @@ class Perceptron:
     def adjustWeight(self, row: list) -> list:
         output = []
         for i in range(self.inputRowLength):
-            print(
-                "".join(
-                    [
-                        str(row[self.inputRowLength + i]),
-                        "+",
-                        str(self.learning_rate),
-                        "*",
-                        str(row[i]),
-                        "*(",
-                        str(row[self.indexZ]),
-                        "-",
-                        str(row[self.indexY]),
-                        ")=",
-                        str(
-                            row[self.inputRowLength + i]
-                            + (
-                                self.learning_rate
-                                * row[i]
-                                * (row[self.indexZ] - row[self.indexY])
-                            )
-                        ),
-                    ]
-                )
-            )
             output.append(
                 row[self.inputRowLength + i]
                 + (self.learning_rate * row[i] * (row[self.indexZ] - row[self.indexY]))
@@ -87,8 +66,20 @@ class Perceptron:
         self.printMatrix()
 
     def printMatrix(self):
+        subscript = [str(x) for x in range(self.inputXLength)]
+        subscript.append("b")
+        label = list(
+            map(lambda x: "".join(x), itertools.product(["x", "w"], subscript))
+        )
+        label = label + ["a", "y", "z"]
+        for x in label:
+            print("{:4s}".format(x), end=" ")
+        print()
+
         for x in self.matrix:
-            print(x)
+            for cell in x:
+                print(f"{cell:<4.1f}", end=" ")
+            print()
         print()
 
     def compute(self):
@@ -133,11 +124,8 @@ class Perceptron:
                 self.matrix[0][self.inputRowLength : self.inputRowLength * 2] = lastrow
 
             interations += 1
-            print("iteration:", interations)
+            print("Iteration:", interations)
             self.printMatrix()
-
-            # if interations == 7:
-            # return
 
 
 p = Perceptron()

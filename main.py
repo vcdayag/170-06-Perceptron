@@ -128,7 +128,7 @@ class Perceptron:
 
             interations += 1
             outputMatrix += "Iteration: " + str(interations) + "\n"
-            outputMatrix += self.stringMatrix() + "\n"
+            outputMatrix += self.stringMatrix()
 
         with open("output.txt", "w") as file:
             file.write(outputMatrix)

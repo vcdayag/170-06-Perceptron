@@ -97,7 +97,6 @@ class Perceptron:
         stopFlag = False
         interations = 0
         outputMatrix = ""
-        # self.printMatrix()
 
         # loop until the weights converge
         while not stopFlag:
@@ -105,27 +104,16 @@ class Perceptron:
             for indexRow in range(len(self.matrix)):
                 row = self.matrix[indexRow]
                 row[self.indexA] = self.computePerceptronValue(row)
-                # print(self.indexA)
-                # print(row[self.indexA])
                 row[self.indexY] = self.determineY(row[self.indexA])
                 if indexRow != len(self.matrix) - 1:
-                    # print("adjustweight "+str(self.adjustWeight(row)))
                     self.matrix[indexRow + 1][
                         self.inputRowLength : self.inputRowLength * 2
                     ] = self.adjustWeight(row)
                 else:
                     lastrow = self.adjustWeight(row)
 
-                # print("edit row")
-                # print(row)
-
             # checks for the weights if it converged
             for indexRow in range(1, len(self.matrix)):
-                # print(
-                #     self.matrix[indexRow][self.inputRowLength : self.inputRowLength * 2]
-                # )
-                # print(lastrow)
-                # print()
                 if (
                     self.matrix[indexRow][self.inputRowLength : self.inputRowLength * 2]
                     != lastrow
@@ -133,14 +121,12 @@ class Perceptron:
                     stopFlag = False
                     break
                 stopFlag = True
-            
+
             # if the weights does not converge update the first row weights with the lastrow
             if not stopFlag:
                 self.matrix[0][self.inputRowLength : self.inputRowLength * 2] = lastrow
 
             interations += 1
-            # print("Iteration:", interations)
-            # self.printMatrix()
             outputMatrix += "Iteration: " + str(interations) + "\n"
             outputMatrix += self.stringMatrix() + "\n"
 

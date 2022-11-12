@@ -1,4 +1,5 @@
 import itertools
+import sys
 
 
 class Perceptron:
@@ -35,7 +36,8 @@ class Perceptron:
                     ]
                     self.matrix.append(rowList)
             except IndexError as e:
-                print("Error: Invalid self.matrix")
+                print("Error: Invalid input matrix")
+                sys.exit()
 
             self.indexA = self.inputRowLength * 2
             self.indexY = self.indexA + 1
@@ -83,7 +85,7 @@ class Perceptron:
             matrix += formatString.format(*row)
             matrix += "\n"
         return matrix
-    
+
     def printMatrix(self):
         print(self.stringMatrix())
 
@@ -134,12 +136,12 @@ class Perceptron:
             # self.printMatrix()
             outputMatrix += "Iteration: " + str(interations) + "\n"
             outputMatrix += self.stringMatrix() + "\n"
-        
-        with open("output.txt","w") as file:
+
+        with open("output.txt", "w") as file:
             file.write(outputMatrix)
 
 
-p = Perceptron()
-p.readInput()
-# p.debugprint()
-p.compute()
+if __name__ == "__main__":
+    p = Perceptron()
+    p.readInput()
+    p.compute()

@@ -86,12 +86,12 @@ class Perceptron:
     
     def printMatrix(self):
         print(self.stringMatrix())
-        pass
 
     def compute(self):
         stopFlag = False
         interations = 0
-        self.printMatrix()
+        outputMatrix = ""
+        # self.printMatrix()
 
         while not stopFlag:
             lastrow = []
@@ -130,8 +130,13 @@ class Perceptron:
                 self.matrix[0][self.inputRowLength : self.inputRowLength * 2] = lastrow
 
             interations += 1
-            print("Iteration:", interations)
-            self.printMatrix()
+            # print("Iteration:", interations)
+            # self.printMatrix()
+            outputMatrix += "Iteration: " + str(interations) + "\n"
+            outputMatrix += self.stringMatrix() + "\n"
+        
+        with open("output.txt","w") as file:
+            file.write(outputMatrix)
 
 
 p = Perceptron()

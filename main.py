@@ -65,22 +65,28 @@ class Perceptron:
         print(self.bias)
         self.printMatrix()
 
-    def printMatrix(self):
+    def stringMatrix(self) -> str:
+        matrix = ""
         subscript = [str(x) for x in range(self.inputXLength)]
         subscript.append("b")
         label = list(
             map(lambda x: "".join(x), itertools.product(["x", "w"], subscript))
         )
         label = label + ["a", "y", "z"]
-        for x in label:
-            print("{:4s}".format(x), end=" ")
-        print()
 
-        for x in self.matrix:
-            for cell in x:
-                print(f"{cell:<4.1f}", end=" ")
-            print()
-        print()
+        formatString = "{:4s} " * len(label)
+        matrix += formatString.format(*label)
+        matrix += "\n"
+
+        formatString = "{:<4.1f} " * len(self.matrix[0])
+        for row in self.matrix:
+            matrix += formatString.format(*row)
+            matrix += "\n"
+        return matrix
+    
+    def printMatrix(self):
+        print(self.stringMatrix())
+        pass
 
     def compute(self):
         stopFlag = False
